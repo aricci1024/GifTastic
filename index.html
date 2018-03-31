@@ -92,13 +92,13 @@
                     gifImages.addClass("stillImg");
 
                     // Setting the src attribute of the image to a property pulled off the result item
-                    gifImages.attr("src", results[i].images.fixed_height.url);
+                    gifImages.attr("src", results[i].images.fixed_height_still.url);
                     
                     // data-still
                     gifImages.attr("data-still", results[i].images.fixed_height_still.url);
                     
                     // data-animate
-                    gifImages.attr("data-animate", results[i].images.fixed_height.ur);
+                    gifImages.attr("data-animate", results[i].images.fixed_height.url);
                     
                     gifImages.attr("data-state", "still");
 
@@ -122,14 +122,15 @@
         $(".stillImg").on("click", function () {
 
             var state = $(this).attr("data-state");
+            var animate = $(this).attr("data-animate");
+            var still = $(this).attr("data-still");
             // If the clicked image's state is still, update its src attribute to what its data-animate value is.
             // Then, set the image's data-state to animate
             if (state === "still") {
-                $(this).attr("src", $(this).attr("data-animate"));
+                $(this).attr("src", animate);
                 $(this).attr("data-state", "animate");
             } else {
-                // Else set src to the data-still value
-                $(this).attr("src", $(this).attr("data-still"));
+                $(this).attr("src", still);
                 $(this).attr("data-state", "still");
             }
         });
@@ -192,7 +193,7 @@
     // button pulls from gif site -- DONE
     // rating of gif is displayed -- DONE
     // get it to grab only 10 gifs -- DONE
-    // initially display gifs as stills
+    // initially display gifs as stills -- DONE
     // animate when clicked
 
 
