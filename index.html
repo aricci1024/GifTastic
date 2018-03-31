@@ -75,7 +75,6 @@
             url: queryURL,
             method: "GET"
             }).then(function(response) {
-                console.log(response);
                 var results = response.data;
 
                 for (var i = 0; i < results.length; i++) {
@@ -102,6 +101,24 @@
                     
                     gifImages.attr("data-state", "still");
 
+                    //========================== animate/still function =======================================
+
+                    $(gifImages).on("click", function () {
+                        var state = $(this).attr("data-state");
+                        var animate = $(this).attr("data-animate");
+                        var still = $(this).attr("data-still");
+                        
+                        // If the clicked image's state is still, update its src attribute to what its data-animate value is.
+                        // Then, set the image's data-state to animate
+                        if (state === "still") {
+                            $(this).attr("src", animate);
+                            $(this).attr("data-state", "animate");
+                        } else {
+                            $(this).attr("src", still);
+                            $(this).attr("data-state", "still");
+                        }
+                    });
+
                     // Displaying the rating
                     gifDiv.append(gifRating);
 
@@ -113,26 +130,6 @@
                 }
             });
         }
-
-
-//========================== animate/still function =======================================
-
-
-        $(".stillImg").on("click", function () {
-
-            var state = $(this).attr("data-state");
-            var animate = $(this).attr("data-animate");
-            var still = $(this).attr("data-still");
-            // If the clicked image's state is still, update its src attribute to what its data-animate value is.
-            // Then, set the image's data-state to animate
-            if (state === "still") {
-                $(this).attr("src", animate);
-                $(this).attr("data-state", "animate");
-            } else {
-                $(this).attr("src", still);
-                $(this).attr("data-state", "still");
-            }
-        });
 
 
 //========================== display category button =======================================
@@ -192,7 +189,7 @@
     // rating of gif is displayed -- DONE
     // get it to grab only 10 gifs -- DONE
     // initially display gifs as stills -- DONE
-    // animate when clicked
+    // animate/still when clicked -- DONE
 
 
     </script>
