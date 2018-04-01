@@ -3,13 +3,26 @@
 <head>
     <title>GifTastic</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Itim" rel="stylesheet">
 </head>
 
 <style>
+    body {
+        background-color:seashell;
+        color:slategray;
+        font-size: 18px;
+        font-family: 'Itim', cursive;
+    }
+
     h1 {
         text-align: center;
-        margin-top: 30px;
+        margin-top: 0;
+        padding-top: 30px;
         margin-bottom: 30px;
+        padding-bottom: 25px;
+        border-bottom: solid 5px blue;
+        background:whitesmoke;
+        color: black;
     }
 
     #add-category {
@@ -28,9 +41,11 @@
         padding: 3px;
         padding-left: 15px;
         padding-right: 15px;
+        
     }
 
     label {
+        margin-top: 30px;
         margin-right: 10px;
         margin-left: 5px;
     }
@@ -42,20 +57,26 @@
         <h1>GifTastic</h1>
     </header>
     <!-- Buttons will get stored here -->
-    <div id="animalButtons"></div>
-
-    <!-- Search area -->
-    <form id="animal-form">
-        <label for="animal-input">Enter an Animal:</label>
-        <input type="text" id="animal-input">
-        <br>
-
-        <!-- Button triggers new category to be added -->
-        <input id="add-category" type="submit" value="Submit">
-    </form>
+    <div class="col-sm-12">
+        <div id="animalButtons"></div>
+    </div>
 
     <!-- Gifs will get stored here -->
-    <div id="gif-view"></div>
+    <div class="col-sm-8 col-xs-12">
+        <div id="gif-view"></div>
+    </div>
+    <br>
+    <!-- Search area -->
+    <div class="col-sm-4 col-xs-12">
+        <form id="animal-form">
+            <label for="animal-input">Create a GIF category:</label>
+            <input type="text" id="animal-input">
+            <br>
+
+            <!-- Button triggers new category to be added -->
+            <input id="add-category" type="submit" value="Submit" class=" btn btn-primary">
+        </form>
+    </div>
 
     <!-- javascript -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -75,6 +96,7 @@
             url: queryURL,
             method: "GET"
             }).then(function(response) {
+                console.log(response);
                 var results = response.data;
 
                 for (var i = 0; i < results.length; i++) {
@@ -88,11 +110,11 @@
                     // Creating and storing an image tag
                     var gifImages = $("<img>");
 
-                    gifImages.addClass("stillImg");
+                    gifImages.addClass("stillImg col-sm-6");
 
                     // Setting the src attribute of the image to a property pulled off the result item
                     gifImages.attr("src", results[i].images.fixed_height_still.url);
-                    
+                    console.log("works");
                     // data-still
                     gifImages.attr("data-still", results[i].images.fixed_height_still.url);
                     
@@ -101,13 +123,14 @@
                     
                     gifImages.attr("data-state", "still");
 
-                    //========================== animate/still function =======================================
+
+//========================== animate/still function =======================================
+        
 
                     $(gifImages).on("click", function () {
                         var state = $(this).attr("data-state");
                         var animate = $(this).attr("data-animate");
                         var still = $(this).attr("data-still");
-                        
                         // If the clicked image's state is still, update its src attribute to what its data-animate value is.
                         // Then, set the image's data-state to animate
                         if (state === "still") {
@@ -131,7 +154,6 @@
             });
         }
 
-
 //========================== display category button =======================================
 
 
@@ -148,7 +170,7 @@
                 // This code $("<button>") is all jQuery needs to create the beginning and end tag. (<button></button>)
                 var a = $("<button>");
                 // Adding a class of category-btn to our button
-                a.addClass("category-btn");
+                a.addClass("category-btn btn btn-primary");
                 // Adding a data-attribute
                 a.attr("data-name", categories[i]);
                 // Providing the initial button text
@@ -156,6 +178,8 @@
                 // Adding the button to the animalButtons div
                 $("#animalButtons").append(a);
             }
+
+            $("#animal-input").val("");
         }
 
 
